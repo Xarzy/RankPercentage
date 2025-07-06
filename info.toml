@@ -1,0 +1,8 @@
+[meta]
+name        = "Test"
+author      = "Xarzy"
+category    = "Testing"
+version     = "1.0.3"
+
+[script]
+dependencies = [ "NadeoServices" ]
