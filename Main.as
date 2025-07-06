@@ -216,48 +216,12 @@ int GetTargetScore(string &in mapUid, int &in leaderboardTarget, int &out rank) 
     return int(top[0]['score']);
 }
 
-string Pad2(uint val) {
-    return (val < 10 ? "0" : "") + val;
-}
-
-string Pad3(uint val) {
-    if (val < 10) return "00" + val;
-    if (val < 100) return "0" + val;
-    return "" + val;
-}
-
-string FormatTime(uint ms) {
-    uint hours = ms / 3600000;
-    ms %= 3600000;
-
-    uint minutes = ms / 60000;
-    ms %= 60000;
-
-    uint seconds = ms / 1000;
-    ms %= 1000;
-
-    string msStr = Pad3(ms);
-
-    if (hours > 0) {
-        // Formato HH:MM:SS.mmm
-        return hours + ":" + minutes + ":" + Pad2(seconds) + "." + msStr;
-    } else if (minutes > 0) {
-        // Formato MM:SS.mmm
-        return minutes + ":" + Pad2(seconds) + "." + msStr;
-    } else {
-        // Solo segundos: SS.mmm (sin ceros delante)
-        return "" + seconds + "." + msStr;
-    }
-}
-
-
-
 void Render() {
     if (!hasMap || !dataReady) return;
 
     UI::Begin("a", UI::WindowFlags::NoResize | UI::WindowFlags::NoTitleBar | UI::WindowFlags::AlwaysAutoResize);
 
-    UI::Text(Icons::Terminal + " Rank " + rankTarget + "/" + totalPlayers + " (Top " + Text::Format("%.2f", leaderboardP) + "%)");
+    UI::Text(Icons::Terminal + " Rank " + rankTarget + "/" + totalPlayers + " (Top " + Text::Format("%.2f", rankTarget * 100 / totalPlayers ) + "%)");
 
     if (rankTarget <= 10000) {
         UI::Text(Icons::Search + " " + Text::Format("%.2f", leaderboardP) + "% Time: " + FormatTime(targetScore) + " ");
@@ -267,7 +231,7 @@ void Render() {
         vec4 color = playerScore == 1 ? vec4(0.8, 0.8, 0.8, 1) : isBehind ? vec4(1, 0.3, 0.3, 1) : vec4(0.3, 0.6, 1, 1); // rojo o azul si hay pb en el mapa, sino gris claro
 
         UI::PushStyleColor(UI::Col::Text, color);
-        string text = (playerScore == 1 ? "No time" : FormatTime(Math::Abs(playerScore - targetScore)));
+        string text = (playerScore == 1 ? "No time" : Time::Format(Math::Abs(playerScore - targetScore), true,true,true));
         playerScore == 1 ? UI::Text(text) : UI::Text((isBehind ? "+" : "-") + text);
 
         UI::PopStyleColor();

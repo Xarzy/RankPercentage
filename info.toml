@@ -1,8 +1,9 @@
 [meta]
-name        = "Test"
+name        = "Rank Percentage"
 author      = "Xarzy"
-category    = "Testing"
-version     = "1.0.3"
+category    = "Overlay"
+version     = "1.0.0"
 
 [script]
-dependencies = [ "NadeoServices" ]
+imports         = [ "Icons", "Time" ]
+dependencies    = [ "NadeoServices" ]
