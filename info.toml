@@ -5,5 +5,4 @@ category    = "Overlay"
 version     = "1.0.0"
 
 [script]
-imports         = [ "Icons", "Time" ]
 dependencies    = [ "NadeoServices" ]
